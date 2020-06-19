@@ -12,7 +12,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
-#include "SpectrogramWindow.h"
+#include "Graphics/SpectrogramWindow.h"
+#include "Filters/FilterStrategy.h"
 
 //==============================================================================
 /**

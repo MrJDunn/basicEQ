@@ -14,32 +14,24 @@
 class FilterStrategy
 {
 public:
-	struct FilterState
-	{
-		FilterState(double sampleRate, int samplesPerBlock, float gain, float frequency, float qFactor): 
-			sampleRate(&sampleRate), samplesPerBlock(&samplesPerBlock), gain(&gain), frequency(&frequency), qFactor(&qFactor){};
-		~FilterState(){};
-		
-		const FilterState operator= (const FilterState& state)
-		{
-			return FilterStrategy::FilterState(*state.sampleRate, *state.samplesPerBlock, *state.gain, *state.frequency, *state.qFactor);
-		};
-
-		double* sampleRate;
-		int* samplesPerBlock;
-		float* gain;
-		float* frequency;
-		float* qFactor;
+	enum FilterType {
+		HI = 1, BAND, LOW
 	};
 
-	FilterStrategy(FilterState);
-	FilterStrategy(double sampleRate, int samplesPerBlock, float gain, float frequency, float qFactor);
+	struct FilterParams {
+		FilterType type;
+		double fq;
+		double q;
+		double gain;
+	};
+
+	FilterStrategy(FilterParams);
 	virtual ~FilterStrategy();
-	void equalise(AudioBuffer<float>&);
-	virtual void setFilterState(const FilterState&);
+	void process(AudioBuffer<float>&,int);
+	virtual void setFilter(FilterParams, double) = 0;
 
 protected:
-	virtual void applyFilter(AudioBuffer<float>&) = 0;
+	IIRFilter* filter = nullptr;
 private:
-	FilterState state;
+	FilterParams filterState;
 };

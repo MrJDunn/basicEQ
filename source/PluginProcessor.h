@@ -11,10 +11,10 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "FilterStrategy.h"
-#include "HiPass.h"
-#include "BandPass.h"
-#include "LoPass.h"
+#include "Filters/FilterStrategy.h"
+#include "Filters/HiPass.h"
+#include "Filters/BandPass.h"
+#include "Filters/LoPass.h"
 
 //==============================================================================
 /**
@@ -60,20 +60,9 @@ public:
     void setStateInformation (const void* data, int sizeInBytes) override;
 
 	//==============================================================================
-	enum FilterType {
-		HI = 1, BAND, LOW
-	};
+	FilterStrategy::FilterParams filterState;
 
-	struct FilterParams{
-		FilterType type;
-		double fq;
-		double q;
-		double gain;
-	};
-
-	FilterParams filterState;
-
-	void setFilter(FilterParams);
+	void setFilter(FilterStrategy::FilterParams);
 	void setFq(double);
 	void setQ(double);
 
@@ -81,6 +70,7 @@ private:
 	//==============================================================================
 	//BandPass& bp;
 	IIRFilter* filter = nullptr;
+	FilterStrategy* filterStrategy = nullptr;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TheBasics_eqAudioProcessor)

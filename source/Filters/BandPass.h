@@ -16,11 +16,9 @@
 class BandPass : public FilterStrategy
 {
 public:
-	BandPass(double, int, float, float, float);
+	BandPass(FilterParams);
 	~BandPass() override;
-private:
-	FilterState state;
-	dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> filter;
-	void setFilterState(const FilterState&) override;
-	void applyFilter(AudioBuffer<float>&) override;
+
+	void setFilter(FilterParams params, double sampleRate) override;
+
 };

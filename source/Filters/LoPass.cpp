@@ -10,9 +10,7 @@
 
 #include "LoPass.h"
 
-LoPass::LoPass(double sampleRate, int samplesPerBlock, float gain, float frequency, float qFactor) :
-	FilterStrategy(sampleRate, samplesPerBlock, gain, frequency, qFactor),
-	state(sampleRate, samplesPerBlock, gain, frequency, qFactor)
+LoPass::LoPass(FilterStrategy::FilterParams params) : FilterStrategy(params)
 {
 	DBG("LoPass::LoPass");
 }
@@ -22,21 +20,7 @@ LoPass::~LoPass()
 	DBG("LoPass::~LoPass");
 }
 
-void LoPass::applyFilter(AudioBuffer<float>& buffer)
+void LoPass::setFilter(FilterParams filterParams, double sampleRate)
 {
-	DBG("LoPass::applyFilter");
-	dsp::AudioBlock<float> block(buffer);
-	dsp::ProcessContextReplacing<float> context(block);
-
-	int numChannels = (int)context.getInputBlock().getNumChannels();
-
-	filter.process(context);
-}
-
-void LoPass::setFilterState(const FilterState& state)
-{
-	this->state = state;
-	filter.state = dsp::IIR::Coefficients<float>::makeLowPass(*state.sampleRate, *state.frequency);
-	dsp::ProcessSpec spec{ *state.sampleRate, static_cast<uint32> (*state.samplesPerBlock), 2 };
-	filter.prepare(spec);
+	filter->setCoefficients(IIRCoefficients::makeLowPass(sampleRate, filterParams.fq, filterParams.q));
 }

@@ -3,24 +3,24 @@
 <JUCERPROJECT id="aVPWjQ" name="theBasics_eq" projectType="audioplug" jucerVersion="5.4.3"
               cppLanguageStandard="17">
   <MAINGROUP id="Ama8aA" name="theBasics_eq">
-    <FILE id="TC1cxQ" name="BandPass.h" compile="0" resource="0" file="Source/BandPass.h"/>
     <GROUP id="{9A51C66A-C0CC-56E2-B921-DDA7C4A9C211}" name="Source">
       <GROUP id="{0453F711-E2FB-D5AF-2BFA-C1877B07F774}" name="Graphics">
-        <FILE id="IcFKgp" name="SpectrogramWindow.cpp" compile="1" resource="0"
-              file="Source/SpectrogramWindow.cpp"/>
-        <FILE id="kCgMoj" name="SpectrogramWindow.h" compile="0" resource="0"
-              file="Source/SpectrogramWindow.h"/>
+        <FILE id="h4A6DN" name="SpectrogramWindow.cpp" compile="1" resource="0"
+              file="Source/Graphics/SpectrogramWindow.cpp"/>
+        <FILE id="t2TZ0r" name="SpectrogramWindow.h" compile="0" resource="0"
+              file="Source/Graphics/SpectrogramWindow.h"/>
       </GROUP>
       <GROUP id="{6254AE7B-081D-AA9A-C3BF-9049021FB832}" name="Filters">
-        <FILE id="GBCa6v" name="BandPass.cpp" compile="1" resource="0" file="Source/BandPass.cpp"/>
-        <FILE id="fYoumX" name="FilterStrategy.cpp" compile="1" resource="0"
-              file="Source/FilterStrategy.cpp"/>
-        <FILE id="T709l4" name="FilterStrategy.h" compile="0" resource="0"
-              file="Source/FilterStrategy.h"/>
-        <FILE id="RHe9Cr" name="HiPass.cpp" compile="1" resource="0" file="Source/HiPass.cpp"/>
-        <FILE id="gcaoPN" name="HiPass.h" compile="0" resource="0" file="Source/HiPass.h"/>
-        <FILE id="tvGnuo" name="LoPass.cpp" compile="1" resource="0" file="Source/LoPass.cpp"/>
-        <FILE id="R5TseF" name="LoPass.h" compile="0" resource="0" file="Source/LoPass.h"/>
+        <FILE id="YMIMMa" name="BandPass.cpp" compile="1" resource="0" file="Source/Filters/BandPass.cpp"/>
+        <FILE id="gwAFGG" name="BandPass.h" compile="0" resource="0" file="Source/Filters/BandPass.h"/>
+        <FILE id="YvMyHr" name="FilterStrategy.cpp" compile="1" resource="0"
+              file="Source/Filters/FilterStrategy.cpp"/>
+        <FILE id="gswgAw" name="FilterStrategy.h" compile="0" resource="0"
+              file="Source/Filters/FilterStrategy.h"/>
+        <FILE id="dHrjhd" name="HiPass.cpp" compile="1" resource="0" file="Source/Filters/HiPass.cpp"/>
+        <FILE id="MYD9NH" name="HiPass.h" compile="0" resource="0" file="Source/Filters/HiPass.h"/>
+        <FILE id="AWIkbO" name="LoPass.cpp" compile="1" resource="0" file="Source/Filters/LoPass.cpp"/>
+        <FILE id="UGdAkj" name="LoPass.h" compile="0" resource="0" file="Source/Filters/LoPass.h"/>
       </GROUP>
       <FILE id="D8p5Rj" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
@@ -41,18 +41,18 @@
         <MODULEPATH id="juce_audio_basics" path="../../Program Files/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../../Program Files/JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_opengl" path="../../Program Files/JUCE/modules"/>
-        <MODULEPATH id="juce_dsp" path="../../Program Files/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_cryptography" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="..\..\..\..\..\..\Program Files\JUCE\modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>

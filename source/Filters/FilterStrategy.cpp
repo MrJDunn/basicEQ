@@ -10,27 +10,19 @@
 
 #include "FilterStrategy.h"
 
-FilterStrategy::FilterStrategy(FilterState state): state(state)
+FilterStrategy::FilterStrategy(FilterParams params): filterState(params), filter(new IIRFilter())
 {
-}
-
-FilterStrategy::FilterStrategy(double sampleRate, int samplesPerBlock, float gain, float frequency, float qFactor) :
-	state(sampleRate, samplesPerBlock, gain, frequency, qFactor)
-{
-	DBG("FilterStrategy::FilterStrategy");
 }
 
 FilterStrategy::~FilterStrategy()
 {
-	DBG("FilterStrategy::~FilterStrategy");
+	delete filter;
 }
 
-void FilterStrategy::equalise(AudioBuffer<float>& buffer)
+void FilterStrategy::process(AudioBuffer<float>& buffer, int numberOfChannels)
 {
-	applyFilter(buffer);
-}
-
-void FilterStrategy::setFilterState(const FilterState& state)
-{
-	this->state = state;
+	for (int channel = 0; channel < numberOfChannels; ++channel)
+	{
+		filter->processSamples(buffer.getWritePointer(channel), buffer.getNumSamples());
+	}
 }

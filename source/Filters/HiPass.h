@@ -16,11 +16,9 @@
 class HiPass : public FilterStrategy
 {
 public:
-	HiPass(double, int, float, float, float);
+	HiPass(FilterParams);
 	~HiPass() override;
-private:
-	FilterState state;
-	dsp::ProcessorDuplicator<dsp::IIR::Filter<float>, dsp::IIR::Coefficients<float>> filter;
-	void setFilterState(const FilterState&) override;
-	void applyFilter(AudioBuffer<float>&) override;
+	
+	void setFilter(FilterParams params, double sampleRate) override;
+
 };

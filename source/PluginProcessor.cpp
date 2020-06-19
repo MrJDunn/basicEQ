@@ -21,13 +21,15 @@ TheBasics_eqAudioProcessor::TheBasics_eqAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       ), filter(new IIRFilter())
+	 ), filter(new IIRFilter())
 #endif
 {
-	filterState.type = FilterType::BAND;
+	filterState.type = FilterStrategy::FilterType::BAND;
 	filterState.fq = 10000.0;
 	filterState.q = 1.0;
 	filterState.gain = 1.0;
+
+	filterStrategy = new HiPass(filterState);
 
 	DBG("TheBasics_eqAudioProcessor::TheBasics_eqAudioProcessor");
 }
@@ -35,6 +37,7 @@ TheBasics_eqAudioProcessor::TheBasics_eqAudioProcessor()
 TheBasics_eqAudioProcessor::~TheBasics_eqAudioProcessor()
 {
 	delete filter;
+	delete filterStrategy;
 }
 
 //==============================================================================
@@ -103,6 +106,7 @@ void TheBasics_eqAudioProcessor::changeProgramName (int index, const String& new
 void TheBasics_eqAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
 	filter->setCoefficients(IIRCoefficients::makeBandPass(sampleRate, 1000, 1.0));
+	filterStrategy->setFilter(filterState, sampleRate);
 }
 
 void TheBasics_eqAudioProcessor::releaseResources()
@@ -139,17 +143,13 @@ void TheBasics_eqAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiB
 {
     ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
-    auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+ //   for (int channel = 0; channel < totalNumInputChannels; ++channel)
+ //   {
+	//	filter->processSamples(buffer.getWritePointer(channel), buffer.getNumSamples());
+	//}
 
-
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-		filter->processSamples(buffer.getWritePointer(channel), buffer.getNumSamples());
-	}
-
+	filterStrategy->process(buffer, totalNumInputChannels);
 }
 
 //==============================================================================
@@ -177,18 +177,27 @@ void TheBasics_eqAudioProcessor::setStateInformation (const void* data, int size
     // whose contents will have been created by the getStateInformation() call.
 }
 
-void TheBasics_eqAudioProcessor::setFilter(FilterParams filterParams)
+void TheBasics_eqAudioProcessor::setFilter(FilterStrategy::FilterParams filterParams)
 {
 	switch (filterParams.type)
 	{
-	case FilterType::HI:
-		filter->setCoefficients(IIRCoefficients::makeHighPass(getSampleRate(), filterParams.fq, filterParams.q));
+	case FilterStrategy::FilterType::HI:
+		//filter->setCoefficients(IIRCoefficients::makeHighPass(getSampleRate(), filterParams.fq, filterParams.q));
+		delete filterStrategy;
+		filterStrategy = new HiPass(filterParams);
+		filterStrategy->setFilter(filterState, getSampleRate());
 		break;
-	case FilterType::BAND:
-		filter->setCoefficients(IIRCoefficients::makeBandPass(getSampleRate(), filterParams.fq, filterParams.q));
+	case FilterStrategy::FilterType::BAND:
+		//filter->setCoefficients(IIRCoefficients::makeBandPass(getSampleRate(), filterParams.fq, filterParams.q));
+		delete filterStrategy;
+		filterStrategy = new BandPass(filterParams);
+		filterStrategy->setFilter(filterState, getSampleRate());
 		break;
-	case FilterType::LOW:
-		filter->setCoefficients(IIRCoefficients::makeLowPass(getSampleRate(), filterParams.fq, filterParams.q));
+	case FilterStrategy::FilterType::LOW:
+		//filter->setCoefficients(IIRCoefficients::makeLowPass(getSampleRate(), filterParams.fq, filterParams.q));
+		delete filterStrategy;
+		filterStrategy = new LoPass(filterParams);
+		filterStrategy->setFilter(filterState, getSampleRate());
 		break;
 	default:
 		break;
